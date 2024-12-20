@@ -52,7 +52,7 @@ Monthly Growth = DIVIDE(
 ```
 ---
 
--##Visualization
+##Visualization
 ###Power BI Dashboard:
 
 ---
