@@ -1,0 +1,74 @@
+DateTable = 
+CALENDAR(
+    MIN(salesdaily[datum]),
+    MAX(salesmonthly[datum])
+)
+
+DayName = FORMAT(DateTable[Date], "dddd")
+MonthName = FORMAT(DateTable[Date], "mmmm")
+-------------------------------------------------
+Product Sales = 
+UNION(
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "M01AB",
+        "Total Sales", salesdaily[M01AB]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "M01AE",
+        "Total Sales", salesdaily[M01AE]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "N02BA",
+        "Total Sales", salesdaily[N02BA]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "N02BE",
+        "Total Sales", salesdaily[N02BE]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "N05B",
+        "Total Sales", salesdaily[N05B]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "N05C",
+        "Total Sales", salesdaily[N05C]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "R03",
+        "Total Sales", salesdaily[R03]
+    ),
+    SELECTCOLUMNS(
+        salesdaily,
+        "Product Name", "R06",
+        "Total Sales", salesdaily[R06]
+    )
+)
+-------------------------------------------------
+Total Daily Sales = SUM(salesdaily[M01AB]) + SUM(salesdaily[M01AE]) + SUM(salesdaily[N02BA]) + SUM(salesdaily[N02BE]) + SUM(salesdaily[N05B]) + SUM(salesdaily[N05C]) + SUM(salesdaily[R03]) + SUM(salesdaily[R06])
+
+Total Weekly Sales = SUM(salesweekly[M01AB]) + SUM(salesweekly[M01AE]) + SUM(salesweekly[N02BA]) + SUM(salesweekly[N02BE]) + SUM(salesweekly[N05B]) + SUM(salesweekly[N05C]) + SUM(salesweekly[R03]) + SUM(salesweekly[R06])
+
+Total Monthly Sales = SUM(salesmonthly[M01AB]) + SUM(salesmonthly[M01AE]) + SUM(salesmonthly[N02BA]) + SUM(salesmonthly[N02BE]) + SUM(salesmonthly[N05B]) + SUM(salesmonthly[N05C]) + SUM(salesmonthly[R03]) + SUM(salesmonthly[R06])
+-------------------------------------------------
+Cumulative Monthly Sales = 
+CALCULATE(
+    [Total Monthly Sales],
+    FILTER(
+        ALL(salesmonthly[datum]),
+        salesmonthly[datum] <= MAX(salesmonthly[datum])
+    )
+)
+-------------------------------------------------
+Monthly Growth = 
+DIVIDE(
+    [Total Monthly Sales] - CALCULATE([Total Monthly Sales], PREVIOUSMONTH(salesmonthly[datum])),
+    CALCULATE([Total Monthly Sales], PREVIOUSMONTH(salesmonthly[datum]))
+)
+-------------------------------------------------
