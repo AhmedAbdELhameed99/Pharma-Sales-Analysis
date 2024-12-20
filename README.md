@@ -49,10 +49,10 @@ Monthly Growth = DIVIDE(
     [Total Monthly Sales] - CALCULATE([Total Monthly Sales], PREVIOUSMONTH(salesmonthly[datum])),
     CALCULATE([Total Monthly Sales], PREVIOUSMONTH(salesmonthly[datum]))
 )
-
+```
 ---
 
-##Visualization
+-##Visualization
 ###Power BI Dashboard:
 
 ---
