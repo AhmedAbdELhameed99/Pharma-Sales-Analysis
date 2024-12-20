@@ -54,6 +54,7 @@ Monthly Growth = DIVIDE(
 
 ## Visualization
 ### Power BI Dashboard:
+![image_alt](https://github.com/AhmedAbdELhameed99/Pharma-Sales-Analysis/blob/main/Pharma%20Dashboard.jpg?raw=true)
 
 ---
 
